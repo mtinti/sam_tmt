@@ -90,6 +90,7 @@
     <div class="row d-flex flex-row">
 
       <div class="col-md-6">
+        <button id="seach_visible", type="submit" class="btn btn-primary" >Seach Visible</button>
         <table id='table' class="display compact"></table>
       </div>
 
@@ -404,6 +405,27 @@
         }
       );
 
+
+      $('#seach_visible').on("click", function(e) {
+        //console.log(e);
+        //var select = table.rows( { search: 'applied' } ).select();
+        console.log('button');
+        console.log(table);
+        var selectedRows = table.rows({ search: 'applied' }).data()
+        var selectedIDs = [];
+        for (i = 0; i < selectedRows.length; i++){selectedIDs.push(selectedRows[i][0])}
+          console.log(selectedIDs);
+
+        for (i = 0; i < selectedIDs.length; i++){
+          d3.selectAll("circle[id*='" + selectedIDs[i] + "']")
+              .style("stroke", COLOR_SELECTION_CIRCLE)
+              .style("opacity", 1)
+              .attr("stroke-width", '5')
+              .raise();
+        }
+
+      })
+
       
 
       $(function() {
@@ -419,6 +441,8 @@
         }
 
 
+
+        
         $('#my-form').on("submit", function(e) {
           e.preventDefault(); // cancel the actual submit and page reload
           /* do what you want with the form */
@@ -459,6 +483,8 @@
       });
 
 
+
+
       $('#my-form').on("reset", function(e) {
           //e.preventDefault();
           console.log('reset');
@@ -469,7 +495,9 @@
           d3.selectAll(".gene_name").remove()
           table.search('').columns().search('').draw();
         
-        });  
+        });
+
+
 
       //select the columns to plot from config file
       //add the plots
